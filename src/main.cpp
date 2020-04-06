@@ -38,14 +38,10 @@ int main() {
    * TODO: Initialize the pid variable.
    */
 
-  double count = 0;
-  double cte_accum = 0;
-  double cte_best = 99999999999.0;
-  double margin_kp = 0.1;
-  double kp = 0.070;
+  double kp = 0.1;
   pid.Init(kp, 0.04, 9);
   
-  h.onMessage([&pid, &count, &cte_accum, &cte_best, &margin_kp, &kp](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
+  h.onMessage([&pid, &kp](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
@@ -70,55 +66,18 @@ int main() {
            * NOTE: Feel free to play around with the throttle and speed.
            *   Maybe use another PID controller to control the speed!
            */
-//           std::cout<<"count"<<count<<'\n';
-//           if(count == 0 && margin_kp > 0.001) {
-//             kp += margin_kp;
-//             pid.Init(kp, 0, 2);
-//             std::cout<<"76 kp"<<kp<<'\n';
-//           }
+
           pid.UpdateError(cte);
           steer_value = pid.TotalError();
-//           count += 1;
-//           cte_accum += abs(cte);
-          
-//           if(count == 50 && margin_kp > 0.001) {
-//             std::cout<<"cte_accum"<<cte_accum<<'\n';
-//             if(cte_accum < cte_best) {
-//               cte_best = cte_accum;
-//               cte_accum = 0;
-//               margin_kp *= 1.1;
-//               count = 0;
-//             }else {
-//               kp -= 2 * margin_kp;
-//               pid.Init(kp, 0, 2);
-//               cte_accum = 0;
-//             }
-//           }
-//           if(count == 100 && margin_kp > 0.001) {
-//             std::cout<<"cte_accum"<<cte_accum<<'\n';
-//             if(cte_accum < cte_best) {
-//               cte_best = cte_accum;       
-//               margin_kp *= 1.1;      
-//             }else {
-//               kp += margin_kp;
-//               margin_kp *= 0.9;
-//             }
-//             count = 0;
-//             cte_accum = 0;
-//           }
             
           if(steer_value < -1) {
             steer_value = -1;
           }else if(steer_value > 1) {
             steer_value = 1;
           }
-//           else if(abs(steer_value) < 0.1) {
-//             steer_value = 0;
-//           }
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
-//           std::cout << "kp:"<<kp<<'\n';
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
