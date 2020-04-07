@@ -39,7 +39,7 @@ int main() {
    */
 
   double kp = 0.1;
-  pid.Init(kp, 0.04, 9);
+  pid.Init(kp, 0.0004, 9);
   
   h.onMessage([&pid, &kp](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {

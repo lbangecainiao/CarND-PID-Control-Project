@@ -38,7 +38,7 @@ The effect of the P component is to steer the vehicle back to the road center. H
 
 The effect of the D component is to reduce the overshoot. Under the folder `Videos` two videos compared the difference with Kd=6 and Kd=9.We could see that with smaller Kd, the oscillation is large. While with larger Kd, the oscillation is relatively small and the vehicle steers back to the road center faster.
 
-The effect of the I component is to cancel the CTE caused by systematic bias.By tuning the parameter I found out that with larger Ki the vehicle tends to have more oscillation.Thus 0.04 is chosen to be the final value of the Ki parameter.
+The effect of the I component is to cancel the CTE caused by systematic bias.By tuning the parameter I found out that with larger Ki the vehicle tends to have more oscillation.Thus 0.0004 is chosen to be the final value of the Ki parameter.
 
 
 #### 3. Desribe how the final hyperparameters were chosen.
@@ -47,7 +47,7 @@ First only the proportional parameter is set, after running the simulator I foun
 
 #### 4. The vehicle must successfully drive a lap around the track.
 
-This point is checked by running the pid file with the simulator.
+The video named `FullLap.mp4` under the folder `Video` recorded the vehicle successfully drived a lap around the track.
 
 ## PID control algorithm
 
